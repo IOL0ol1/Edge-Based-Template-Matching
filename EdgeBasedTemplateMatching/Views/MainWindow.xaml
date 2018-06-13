@@ -1,0 +1,61 @@
+﻿<Window
+    x:Class="EdgeBasedTemplateMatching.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Converter="clr-namespace:EdgeBasedTemplateMatching.Converter"
+    xmlns:ViewModels="clr-namespace:EdgeBasedTemplateMatching.ViewModels"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Title="{Binding Title}" Height="600" Width="800" WindowState="Maximized">
+    <Window.Resources>
+        <Converter:MatToBitmapSourceConvert x:Key="BitmapSourceConvert" />
+    </Window.Resources>
+    <Window.DataContext>
+        <ViewModels:MainWindowViewModel />
+    </Window.DataContext>
+
+    <Grid DockPanel.Dock="Bottom">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0">
+            <Menu DockPanel.Dock="Top" Padding="0,5">
+                <MenuItem Header="Load(_L)" Command="{Binding LoadCommand}" CommandParameter="template" />
+                <MenuItem Header="Create Template(_T)" Command="{Binding TemplateCommand}" />
+            </Menu>
+            <InkCanvas x:Name="InkCanvas1" Grid.Column="0" Grid.Row="0" Strokes="{Binding Strokes}">
+                <InkCanvas.LayoutTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="{Binding Scale.ScaleX}" ScaleY="{Binding Scale.ScaleY}" />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </InkCanvas.LayoutTransform>
+                <InkCanvas.Background>
+                    <VisualBrush Stretch="Uniform" Transform="{Binding LayoutTransform, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type InkCanvas}}}">
+                        <VisualBrush.Visual>
+                            <Image OpacityMask="#FFE81010" Source="{Binding Template, Converter={StaticResource BitmapSourceConvert}}" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </InkCanvas.Background>
+            </InkCanvas>
+        </DockPanel>
+        <DockPanel Grid.Column="1">
+            <Menu DockPanel.Dock="Top" Padding="0,5">
+                <MenuItem Header="Load(_L)" Command="{Binding LoadCommand}" CommandParameter="source" />
+                <MenuItem Header="Edge Matching(_M)" Command="{Binding MatchingCommand}" />
+            </Menu>
+            <InkCanvas>
+                <InkCanvas.Background>
+                    <VisualBrush Stretch="Uniform">
+                        <VisualBrush.Visual>
+                            <Image Source="{Binding Source, Converter={StaticResource BitmapSourceConvert}}" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </InkCanvas.Background>
+            </InkCanvas>
+        </DockPanel>
+    </Grid>
+</Window>
