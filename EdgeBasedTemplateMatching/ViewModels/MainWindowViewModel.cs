@@ -26,7 +26,13 @@ namespace EdgeBasedTemplateMatching.ViewModels
         {
             LoadCommand = new DelegateCommand<string>(LoadExecute);
             TemplateCommand = new DelegateCommand(TemplateExecute);
-            MatchingCommand = new DelegateCommand(MatchingExecute);
+            MADCommand = new DelegateCommand(MADExecute);
+            SADCommand = new DelegateCommand(SADExecute);
+            SSDCommand = new DelegateCommand(SSDExecute);
+            MSDCommand = new DelegateCommand(MSDExecute);
+            NCCCommand = new DelegateCommand(NCCExecute);
+            SSDACommand = new DelegateCommand(SSDAExecute);
+            SATDCommand = new DelegateCommand(SATDExecute);
         }
 
         private string _title = "Edge Base Template Matching";
@@ -39,7 +45,13 @@ namespace EdgeBasedTemplateMatching.ViewModels
 
         public ICommand LoadCommand { get; private set; }
         public ICommand TemplateCommand { get; private set; }
-        public ICommand MatchingCommand { get; private set; }
+        public ICommand MADCommand { get; private set; }
+        public ICommand SADCommand { get; private set; }
+        public ICommand SSDCommand { get; private set; }
+        public ICommand MSDCommand { get; private set; }
+        public ICommand NCCCommand { get; private set; }
+        public ICommand SSDACommand { get; private set; }
+        public ICommand SATDCommand { get; private set; }
 
         private Mat template;
 
@@ -185,12 +197,45 @@ namespace EdgeBasedTemplateMatching.ViewModels
             }
         }
 
+        #region MAD平均绝对差
+
+        private void MADExecute()
+        {
+        }
+
+        #endregion MAD平均绝对差
+
+        #region SAD绝对误差和
+
+        private void SADExecute()
+        {
+        }
+
+        #endregion SAD绝对误差和
+
+        #region SSD误差平方和
+
+        private void SSDExecute()
+        {
+        }
+
+        #endregion SSD误差平方和
+
+        #region MSD平均误差平方和
+
+        private void MSDExecute()
+        {
+        }
+
+        #endregion MSD平均误差平方和
+
+        #region NCC归一化积相关
+
         private double minScore = 0.5;
         private double maxScore = 0.9;
 
         //private double greediness = 0;
-
-        private void MatchingExecute()
+        private void NCCExecute()
         {
             try
             {
@@ -290,6 +335,24 @@ namespace EdgeBasedTemplateMatching.ViewModels
                 Trace.TraceError(ex.StackTrace);
             }
         }
+
+        #endregion NCC归一化积相关
+
+        #region SSDA序贯相似性检测
+
+        private void SSDAExecute()
+        {
+        }
+
+        #endregion SSDA序贯相似性检测
+
+        #region SATD哈德曼变换
+
+        private void SATDExecute()
+        {
+        }
+
+        #endregion SATD哈德曼变换
     }
 
     public struct PointInfo
