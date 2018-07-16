@@ -45,7 +45,15 @@
         <DockPanel Grid.Column="1">
             <Menu DockPanel.Dock="Top" Padding="0,5">
                 <MenuItem Header="Load(_L)" Command="{Binding LoadCommand}" CommandParameter="source" />
-                <MenuItem Header="Edge Matching(_M)" Command="{Binding MatchingCommand}" />
+                <MenuItem Header="Edge Matching(_M)">
+                    <MenuItem Header="MAD平均绝对差算法(_1)" Command="{Binding MADCommand}" />
+                    <MenuItem Header="SAD绝对误差和算法(_2)" Command="{Binding SADCommand}" />
+                    <MenuItem Header="SSD误差平方和算法(_3)" Command="{Binding SSDCommand}" />
+                    <MenuItem Header="MSD平均误差平方和算法(_4)" Command="{Binding MSDCommand}" />
+                    <MenuItem Header="NCC归一化积相关算法(_5)"  Command="{Binding NCCCommand}" />
+                    <MenuItem Header="SSDA序贯相似性检测算法(_6)" Command="{Binding SSDACommand}" />
+                    <MenuItem Header="SATD哈德曼变换算法(_7)" Command="{Binding SATDCommand}" />
+                </MenuItem>
             </Menu>
             <InkCanvas>
                 <InkCanvas.Background>
