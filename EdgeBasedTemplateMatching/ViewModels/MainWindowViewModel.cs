@@ -197,39 +197,39 @@ namespace EdgeBasedTemplateMatching.ViewModels
             }
         }
 
-        #region MAD平均绝对差
+        #region MAD
 
         private void MADExecute()
         {
         }
 
-        #endregion MAD平均绝对差
+        #endregion MAD
 
-        #region SAD绝对误差和
+        #region SAD
 
         private void SADExecute()
         {
         }
 
-        #endregion SAD绝对误差和
+        #endregion SAD
 
-        #region SSD误差平方和
+        #region SSD
 
         private void SSDExecute()
         {
         }
 
-        #endregion SSD误差平方和
+        #endregion SSD
 
-        #region MSD平均误差平方和
+        #region MSD
 
         private void MSDExecute()
         {
         }
 
-        #endregion MSD平均误差平方和
+        #endregion MSD
 
-        #region NCC归一化积相关
+        #region NCC
 
         private double minScore = 0.5;
         private double greediness = 0.5;
@@ -333,23 +333,23 @@ namespace EdgeBasedTemplateMatching.ViewModels
             }
         }
 
-        #endregion NCC归一化积相关
+        #endregion NCC
 
-        #region SSDA序贯相似性检测
+        #region SSDA
 
         private void SSDAExecute()
         {
         }
 
-        #endregion SSDA序贯相似性检测
+        #endregion SSDA
 
-        #region SATD哈德曼变换
+        #region SATD
 
         private void SATDExecute()
         {
         }
 
-        #endregion SATD哈德曼变换
+        #endregion SATD
     }
 
     public struct PointInfo

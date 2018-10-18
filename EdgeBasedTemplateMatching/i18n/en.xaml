@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:EdgeBasedTemplateMatching.i18n">
+
+    <sys:String x:Key="Load">Load image(_L)</sys:String>
+    <sys:String x:Key="Create">Create template(_T)</sys:String>
+    <sys:String x:Key="Match">Edge matching(_M)</sys:String>
+    <sys:String x:Key="MAD">MAD[Mean Absolute Differences](_1)</sys:String>
+    <sys:String x:Key="SAD">SAD[Sum of Absolute Differences](_2)</sys:String>
+    <sys:String x:Key="SSD">SSD[Sum of Squared Differences](_3)</sys:String>
+    <sys:String x:Key="MSD">MSD[Mean Square Differences](_4)</sys:String>
+    <sys:String x:Key="NCC">NCC[Normalized Cross Correlation](_5)</sys:String>
+    <sys:String x:Key="SSDA">SSDA[Sequential Similiarity Detection Algorithm](_6)</sys:String>
+    <sys:String x:Key="SATD">SATD[Sum of Absolute Transformed Difference](_7)</sys:String>
+</ResourceDictionary>

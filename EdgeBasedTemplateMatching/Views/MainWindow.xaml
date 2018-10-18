@@ -21,8 +21,8 @@
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0">
             <Menu DockPanel.Dock="Top" Padding="0,5">
-                <MenuItem Header="Load(_L)" Command="{Binding LoadCommand}" CommandParameter="template" />
-                <MenuItem Header="Create Template(_T)" Command="{Binding TemplateCommand}" />
+                <MenuItem Header="{DynamicResource Load}" Command="{Binding LoadCommand}" CommandParameter="template" />
+                <MenuItem Header="{DynamicResource Create}" Command="{Binding TemplateCommand}" />
             </Menu>
             <InkCanvas x:Name="InkCanvas1" Grid.Column="0" Grid.Row="0" Strokes="{Binding Strokes}">
                 <InkCanvas.LayoutTransform>
@@ -44,15 +44,15 @@
         </DockPanel>
         <DockPanel Grid.Column="1">
             <Menu DockPanel.Dock="Top" Padding="0,5">
-                <MenuItem Header="Load(_L)" Command="{Binding LoadCommand}" CommandParameter="source" />
-                <MenuItem Header="Edge Matching(_M)">
-                    <MenuItem Header="MAD平均绝对差算法(_1)" Command="{Binding MADCommand}" />
-                    <MenuItem Header="SAD绝对误差和算法(_2)" Command="{Binding SADCommand}" />
-                    <MenuItem Header="SSD误差平方和算法(_3)" Command="{Binding SSDCommand}" />
-                    <MenuItem Header="MSD平均误差平方和算法(_4)" Command="{Binding MSDCommand}" />
-                    <MenuItem Header="NCC归一化积相关算法(_5)"  Command="{Binding NCCCommand}" />
-                    <MenuItem Header="SSDA序贯相似性检测算法(_6)" Command="{Binding SSDACommand}" />
-                    <MenuItem Header="SATD哈德曼变换算法(_7)" Command="{Binding SATDCommand}" />
+                <MenuItem Header="{DynamicResource Load}" Command="{Binding LoadCommand}" CommandParameter="source" />
+                <MenuItem Header="{DynamicResource Match}">
+                    <MenuItem Header="{DynamicResource MAD}" Command="{Binding MADCommand}" />
+                    <MenuItem Header="{DynamicResource SAD}" Command="{Binding SADCommand}" />
+                    <MenuItem Header="{DynamicResource SSD}" Command="{Binding SSDCommand}" />
+                    <MenuItem Header="{DynamicResource MSD}" Command="{Binding MSDCommand}" />
+                    <MenuItem Header="{DynamicResource NCC}"  Command="{Binding NCCCommand}" />
+                    <MenuItem Header="{DynamicResource SSDA}" Command="{Binding SSDACommand}" />
+                    <MenuItem Header="{DynamicResource SATD}" Command="{Binding SATDCommand}" />
                 </MenuItem>
             </Menu>
             <InkCanvas>
