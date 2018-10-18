@@ -147,8 +147,8 @@ namespace EdgeBasedTemplateMatching.ViewModels
 
                 /// compute the magnitude and direction
                 Mat magnitude = new Mat();
-                Mat angle = new Mat();
-                CvInvoke.CartToPolar(gx, gy, magnitude, angle);
+                Mat direction = new Mat();
+                CvInvoke.CartToPolar(gx, gy, magnitude, direction);
 
                 /// save edge info
                 var _gx = gx.ToImage<Gray, double>();
@@ -232,14 +232,13 @@ namespace EdgeBasedTemplateMatching.ViewModels
         #region NCC归一化积相关
 
         private double minScore = 0.5;
-        private double maxScore = 0.9;
+        private double greediness = 0.5;
 
-        //private double greediness = 0;
         private void NCCExecute()
         {
             try
             {
-                Trace.TraceInformation("matching start");
+                Trace.TraceInformation("NCC matching start");
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
 
@@ -257,17 +256,17 @@ namespace EdgeBasedTemplateMatching.ViewModels
 
                 /// compute the magnitude and direction
                 Mat magnitude = new Mat();
-                Mat angle = new Mat();
-                CvInvoke.CartToPolar(gx, gy, magnitude, angle);
+                Mat direction = new Mat();
+                CvInvoke.CartToPolar(gx, gy, magnitude, direction);
 
                 /// template matching
                 var _gx = gx.ToImage<Gray, double>();
                 var _gy = gy.ToImage<Gray, double>();
                 var _magnitude = magnitude.ToImage<Gray, double>();
 
-                //long totalLength = contoursLength;
-                //double nMinScore = minScore / totalLength; // normalized min score
-                //double nGreediness = (1 - greediness * minScore) / (1 - greediness) / totalLength;
+                long totalLength = contoursLength;
+                double nMinScore = minScore / totalLength; // normalized min score
+                double nGreediness = (1 - greediness * minScore) / (1 - greediness) / totalLength;
 
                 double partialScore = 0;
                 double resultScore = 0;
@@ -301,11 +300,9 @@ namespace EdgeBasedTemplateMatching.ViewModels
                                         sum += (sdx * tdx + sdy * tdy) * contoursInfo[m][n].MagnitudeN / nMagnitude;
                                 }
                                 partialScore = sum / num;
-                                if (partialScore < minScore)//Math.Min((minScore - 1) + (nGreediness * num), nMinScore * num))
+                                if (partialScore < Math.Min((minScore - 1) + (nGreediness * num), nMinScore * num))
                                     break;
                             }
-                            if (partialScore > maxScore)
-                                break;
                         }
                         if (partialScore > resultScore)
                         {
@@ -327,7 +324,7 @@ namespace EdgeBasedTemplateMatching.ViewModels
                 CvInvoke.Circle(src, point, 2, new Bgr(System.Drawing.Color.Red).MCvScalar, -1);
                 Source = src;
 
-                Trace.TraceInformation($"matching end. time: {stopwatch.GetElapsedMilliseconds()} ms");
+                Trace.TraceInformation($"NCC matching end. time: {stopwatch.GetElapsedMilliseconds()} ms");
             }
             catch (Exception ex)
             {
