@@ -231,8 +231,8 @@ namespace EdgeBasedTemplateMatching.ViewModels
 
         #region NCC
 
-        private double minScore = 0.5;
-        private double greediness = 0.5;
+        private double minScore = 0.8;
+        private double greediness = 0.8;
 
         private void NCCExecute()
         {
