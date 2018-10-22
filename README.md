@@ -12,7 +12,7 @@ There are some differences with the articles cited below.
 2 In fact, in addition to the optimization ideas in the cited articles,    
 there are plenty of opportunities for optimization.
 
-this is Master branch ,please see Faster branch
+this is Master branch ,please see [Faster](/tree/Faster/) branch
 
 ### Preview   
 Note:Repeat runs to match multiple goals.
