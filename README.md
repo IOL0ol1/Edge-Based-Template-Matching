@@ -6,14 +6,23 @@ Edge Based Template Matching
 [Edge Based Template Matching](https://www.codeproject.com/Articles/99457/Edge-Based-Template-Matching)    
 
 
-### Note
+### Different    
 
-The operation of establishing the gradient template can be completed simultaneously when the Canny algorithm is looking for the edge, and the original article inserts the intermediate calculation into it by implementing the Canny algorithm itself.     
+The reference article implements the Canny algorithm itself.      
+Inserts the operation that creates the gradient template into it.
 
-Here is the implementation that is different.      
-First use canny to find the edges, and then traverse the edges to create a gradient template
+The implementation here is different.
 
-Use conditional compilation symbol "FAST" to ciew an unstable result     
+First use Canny algorithm to find the edges.     
+Then traverse the edges to create a gradient template.
+This's slow,but less code(use EmguCV's Canny)
+
+
+
+
+### Note    
+
+Use conditional compilation symbol "FAST" to view an faster but unstable result     
 
 ### Preview   
 ![click to preview](preview.gif)
