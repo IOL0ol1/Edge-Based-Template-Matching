@@ -1,12 +1,14 @@
-﻿<Window
-    x:Class="EdgeBasedTemplateMatching.Views.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:prism="http://prismlibrary.com/"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Converter="clr-namespace:EdgeBasedTemplateMatching.Converter"
-    xmlns:ViewModels="clr-namespace:EdgeBasedTemplateMatching.ViewModels"
-    prism:ViewModelLocator.AutoWireViewModel="True"
-    Title="{Binding Title}" Height="600" Width="800" WindowState="Maximized">
+﻿<Window x:Class="EdgeBasedTemplateMatching.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:Converter="clr-namespace:EdgeBasedTemplateMatching.Converter"
+        xmlns:ViewModels="clr-namespace:EdgeBasedTemplateMatching.ViewModels"
+        Title="{Binding Title}"
+        Width="800"
+        Height="600"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        WindowState="Maximized">
     <Window.Resources>
         <Converter:MatToBitmapSourceConvert x:Key="BitmapSourceConvert" />
     </Window.Resources>
@@ -20,14 +22,18 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0">
-            <Menu DockPanel.Dock="Top" Padding="0,5">
-                <MenuItem Header="{DynamicResource Load}" Command="{Binding LoadCommand}" CommandParameter="template" />
+            <Menu Padding="0,5" DockPanel.Dock="Top">
+                <MenuItem Header="{DynamicResource Load}"
+                          Command="{Binding LoadCommand}"
+                          CommandParameter="template" />
                 <MenuItem Header="{DynamicResource Create}" Command="{Binding TemplateCommand}" />
             </Menu>
-            <InkCanvas x:Name="InkCanvas1" Grid.Column="0" Grid.Row="0" Strokes="{Binding Strokes}">
+            <InkCanvas x:Name="InkCanvas1"
+                       Grid.Row="0"
+                       Grid.Column="0">
                 <InkCanvas.LayoutTransform>
                     <TransformGroup>
-                        <ScaleTransform ScaleX="{Binding Scale.ScaleX}" ScaleY="{Binding Scale.ScaleY}" />
+                        <ScaleTransform ScaleX="1" ScaleY="1" />
                         <SkewTransform />
                         <RotateTransform />
                         <TranslateTransform />
@@ -43,14 +49,16 @@
             </InkCanvas>
         </DockPanel>
         <DockPanel Grid.Column="1">
-            <Menu DockPanel.Dock="Top" Padding="0,5">
-                <MenuItem Header="{DynamicResource Load}" Command="{Binding LoadCommand}" CommandParameter="source" />
+            <Menu Padding="0,5" DockPanel.Dock="Top">
+                <MenuItem Header="{DynamicResource Load}"
+                          Command="{Binding LoadCommand}"
+                          CommandParameter="source" />
                 <MenuItem Header="{DynamicResource Match}">
                     <MenuItem Header="{DynamicResource MAD}" Command="{Binding MADCommand}" />
                     <MenuItem Header="{DynamicResource SAD}" Command="{Binding SADCommand}" />
                     <MenuItem Header="{DynamicResource SSD}" Command="{Binding SSDCommand}" />
                     <MenuItem Header="{DynamicResource MSD}" Command="{Binding MSDCommand}" />
-                    <MenuItem Header="{DynamicResource NCC}"  Command="{Binding NCCCommand}" />
+                    <MenuItem Header="{DynamicResource NCC}" Command="{Binding NCCCommand}" />
                     <MenuItem Header="{DynamicResource SSDA}" Command="{Binding SSDACommand}" />
                     <MenuItem Header="{DynamicResource SATD}" Command="{Binding SATDCommand}" />
                 </MenuItem>
@@ -59,7 +67,7 @@
                 <InkCanvas.Background>
                     <VisualBrush Stretch="Uniform">
                         <VisualBrush.Visual>
-                            <Image Source="{Binding Source, Converter={StaticResource BitmapSourceConvert}}" />
+                            <Image Source="{Binding Destination, Converter={StaticResource BitmapSourceConvert}}" />
                         </VisualBrush.Visual>
                     </VisualBrush>
                 </InkCanvas.Background>

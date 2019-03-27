@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Windows;
-using System.Windows.Ink;
 using System.Windows.Input;
-using System.Windows.Media;
-
-//using System.Drawing;
 
 namespace EdgeBasedTemplateMatching.ViewModels
 {
-    using System.IO;
     using Emgu.CV;
     using Emgu.CV.CvEnum;
     using Emgu.CV.Structure;
@@ -18,7 +12,6 @@ namespace EdgeBasedTemplateMatching.ViewModels
     using Microsoft.Win32;
     using Prism.Commands;
     using Prism.Mvvm;
-    using Utility;
 
     public class MainWindowViewModel : BindableBase
     {
@@ -26,13 +19,13 @@ namespace EdgeBasedTemplateMatching.ViewModels
         {
             LoadCommand = new DelegateCommand<string>(LoadExecute);
             TemplateCommand = new DelegateCommand(TemplateExecute);
-            MADCommand = new DelegateCommand(MADExecute);
-            SADCommand = new DelegateCommand(SADExecute);
-            SSDCommand = new DelegateCommand(SSDExecute);
-            MSDCommand = new DelegateCommand(MSDExecute);
+            MADCommand = new DelegateCommand(() => { }, () => false); // Not implemented
+            SADCommand = new DelegateCommand(() => { }, () => false); // Not implemented
+            SSDCommand = new DelegateCommand(() => { }, () => false); // Not implemented
+            MSDCommand = new DelegateCommand(() => { }, () => false); // Not implemented
             NCCCommand = new DelegateCommand(NCCExecute);
-            SSDACommand = new DelegateCommand(SSDAExecute);
-            SATDCommand = new DelegateCommand(SATDExecute);
+            SSDACommand = new DelegateCommand(() => { }, () => false); // Not implemented
+            SATDCommand = new DelegateCommand(() => { }, () => false); // Not implemented
         }
 
         private string _title = "Edge Base Template Matching";
@@ -55,6 +48,9 @@ namespace EdgeBasedTemplateMatching.ViewModels
 
         private Mat template;
 
+        /// <summary>
+        /// Image used to create template
+        /// </summary>
         public Mat Template
         {
             get { return template; }
@@ -65,34 +61,25 @@ namespace EdgeBasedTemplateMatching.ViewModels
             }
         }
 
-        private Mat source;
+        private Mat destination;
 
-        public Mat Source
+        /// <summary>
+        /// Image to be processed
+        /// </summary>
+        public Mat Destination
         {
-            get { return source; }
+            get { return destination; }
             set
             {
-                source = value;
+                destination = value;
                 RaisePropertyChanged();
             }
         }
 
-        private ScaleTransform scale;
-
-        public ScaleTransform Scale
-        {
-            get { return scale; }
-            set { SetProperty(ref scale, value); }
-        }
-
-        private StrokeCollection strokes = new StrokeCollection();
-
-        public StrokeCollection Strokes
-        {
-            get { return strokes; }
-            set { SetProperty(ref strokes, value); }
-        }
-
+        /// <summary>
+        /// Load template and destination image
+        /// </summary>
+        /// <param name="i"></param>
         private void LoadExecute(string i)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -105,18 +92,26 @@ namespace EdgeBasedTemplateMatching.ViewModels
                     if (i.ToLower().Contains("t"))
                         Template = new Mat(file);
                     else
-                        Source = new Mat(file);
+                        Destination = new Mat(file);
                 }
             }
-            Scale = new ScaleTransform(1, 1);
         }
 
+        /// <summary>
+        /// Edge points
+        /// </summary>
         private VectorOfVectorOfPoint contoursRelative = new VectorOfVectorOfPoint();
 
+        /// <summary>
+        /// Gradient information on edge points
+        /// </summary>
         private List<PointInfo[]> contoursInfo = new List<PointInfo[]>();
 
         private long contoursLength = 0;
 
+        /// <summary>
+        /// Create a template
+        /// </summary>
         private void TemplateExecute()
         {
             try
@@ -188,6 +183,14 @@ namespace EdgeBasedTemplateMatching.ViewModels
                 CvInvoke.DrawContours(src, contours, -1, new Bgr(System.Drawing.Color.Green).MCvScalar, 5);
                 var point = new System.Drawing.Point(contours[0][0].X, contours[0][0].Y);
                 CvInvoke.Circle(src, point, 2, new Bgr(System.Drawing.Color.Red).MCvScalar, -1);
+                gx.Dispose();
+                _gx.Dispose();
+                gy.Dispose();
+                _gy.Dispose();
+                magnitude.Dispose();
+                _magnitude.Dispose();
+                direction.Dispose();
+                Template.Dispose();
                 Template = src;
             }
             catch (Exception ex)
@@ -197,43 +200,14 @@ namespace EdgeBasedTemplateMatching.ViewModels
             }
         }
 
-        #region MAD
-
-        private void MADExecute()
-        {
-        }
-
-        #endregion MAD
-
-        #region SAD
-
-        private void SADExecute()
-        {
-        }
-
-        #endregion SAD
-
-        #region SSD
-
-        private void SSDExecute()
-        {
-        }
-
-        #endregion SSD
-
-        #region MSD
-
-        private void MSDExecute()
-        {
-        }
-
-        #endregion MSD
-
         #region NCC
 
         private double minScore = 0.8;
         private double greediness = 0.8;
 
+        /// <summary>
+        /// NCC to find template
+        /// </summary>
         private void NCCExecute()
         {
             try
@@ -242,11 +216,11 @@ namespace EdgeBasedTemplateMatching.ViewModels
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
 
-                Mat src = source.Clone();
+                Mat dst = destination.Clone();
 
                 /// convert to gray image
                 Mat grayImage = new Mat();
-                CvInvoke.CvtColor(src, grayImage, ColorConversion.Rgb2Gray);
+                CvInvoke.CvtColor(dst, grayImage, ColorConversion.Rgb2Gray);
 
                 /// use the sobel filter on the source image which returns the gradients in the X (Gx) and Y (Gy) direction.
                 Mat gx = new Mat();
@@ -300,7 +274,11 @@ namespace EdgeBasedTemplateMatching.ViewModels
                                         sum += (sdx * tdx + sdy * tdy) * contoursInfo[m][n].MagnitudeN / nMagnitude;
                                 }
                                 partialScore = sum / num;
+#if FAST
+                                if (partialScore < minScore)
+#else
                                 if (partialScore < Math.Min((minScore - 1) + (nGreediness * num), nMinScore * num))
+#endif
                                     break;
                             }
                         }
@@ -320,11 +298,13 @@ namespace EdgeBasedTemplateMatching.ViewModels
                 /// NOTE: origin point is the first edge point
                 var point = new System.Drawing.Point(resultX, resultY);
                 Trace.TraceInformation($"Point : {point}");
-                CvInvoke.DrawContours(src, contoursRelative, -1, new Bgr(System.Drawing.Color.Green).MCvScalar, 5, offset: point);
-                CvInvoke.Circle(src, point, 2, new Bgr(System.Drawing.Color.Red).MCvScalar, -1);
-                Source = src;
+                CvInvoke.DrawContours(dst, contoursRelative, -1, new Bgr(System.Drawing.Color.Green).MCvScalar, 5, offset: point);
+                CvInvoke.Circle(dst, point, 2, new Bgr(System.Drawing.Color.Red).MCvScalar, -1);
+                grayImage.Dispose();
+                Destination.Dispose();
+                Destination = dst;
 
-                Trace.TraceInformation($"NCC matching end. time: {stopwatch.GetElapsedMilliseconds()} ms");
+                Trace.TraceInformation($"NCC matching end. time: {(double)stopwatch.ElapsedTicks * 1000 / Stopwatch.Frequency} ms");
             }
             catch (Exception ex)
             {
@@ -334,24 +314,22 @@ namespace EdgeBasedTemplateMatching.ViewModels
         }
 
         #endregion NCC
-
-        #region SSDA
-
-        private void SSDAExecute()
-        {
-        }
-
-        #endregion SSDA
-
-        #region SATD
-
-        private void SATDExecute()
-        {
-        }
-
-        #endregion SATD
     }
 
+    /// <summary>
+    /// Gradient information corresponding to a point
+    /// ----→  a
+    /// |\ ）m
+    /// | \
+    /// |  \
+    /// ↓   \
+    /// b    c
+    ///
+    /// DerivativeX = a
+    /// DerivativeY = b
+    /// Magnitude = c = √(a²+b²)
+    /// Direction = the direction of c (not currently in use)
+    /// </summary>
     public struct PointInfo
     {
         public double Direction;
@@ -362,7 +340,7 @@ namespace EdgeBasedTemplateMatching.ViewModels
         /// </summary>
         public double MagnitudeN;
 
-        public double DerivativeX;
-        public double DerivativeY;
+        public double DerivativeX; // X-axis Gradient
+        public double DerivativeY; // Y-axis Gradient
     }
 }

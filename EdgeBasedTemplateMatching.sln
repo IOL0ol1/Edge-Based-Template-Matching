@@ -1,37 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27703.2018
+VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdgeBasedTemplateMatching", "EdgeBasedTemplateMatching\EdgeBasedTemplateMatching.csproj", "{DCC781D3-68FA-4B50-B99B-CAD656C34849}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdgeBasedTemplateMatching", "EdgeBasedTemplateMatching\EdgeBasedTemplateMatching.csproj", "{E3CDBF1A-A59B-42FB-B40F-AD8F3080435E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DCC781D3-68FA-4B50-B99B-CAD656C34849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DCC781D3-68FA-4B50-B99B-CAD656C34849}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DCC781D3-68FA-4B50-B99B-CAD656C34849}.Debug|x64.ActiveCfg = Debug|x64
-		{DCC781D3-68FA-4B50-B99B-CAD656C34849}.Debug|x64.Build.0 = Debug|x64
-		{DCC781D3-68FA-4B50-B99B-CAD656C34849}.Debug|x86.ActiveCfg = Debug|x86
-		{DCC781D3-68FA-4B50-B99B-CAD656C34849}.Debug|x86.Build.0 = Debug|x86
-		{DCC781D3-68FA-4B50-B99B-CAD656C34849}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DCC781D3-68FA-4B50-B99B-CAD656C34849}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DCC781D3-68FA-4B50-B99B-CAD656C34849}.Release|x64.ActiveCfg = Release|x64
-		{DCC781D3-68FA-4B50-B99B-CAD656C34849}.Release|x64.Build.0 = Release|x64
-		{DCC781D3-68FA-4B50-B99B-CAD656C34849}.Release|x86.ActiveCfg = Release|x86
-		{DCC781D3-68FA-4B50-B99B-CAD656C34849}.Release|x86.Build.0 = Release|x86
+		{E3CDBF1A-A59B-42FB-B40F-AD8F3080435E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3CDBF1A-A59B-42FB-B40F-AD8F3080435E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3CDBF1A-A59B-42FB-B40F-AD8F3080435E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3CDBF1A-A59B-42FB-B40F-AD8F3080435E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6C4C5520-69DF-45E6-AC13-8732C014906A}
+		SolutionGuid = {44B66E5F-0C8D-424C-9632-C2FE2018DB55}
 	EndGlobalSection
 EndGlobal
