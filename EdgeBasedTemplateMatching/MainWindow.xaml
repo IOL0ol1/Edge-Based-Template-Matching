@@ -1,0 +1,79 @@
+﻿<Window x:Class="EdgeBasedTemplateMatching.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:EdgeBasedTemplateMatching"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:pt="http://propertytools.org/wpf" Title="Edge Base Template Matching"
+        Width="800" Height="450"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        TextElement.FontSize="14" TextElement.FontWeight="Medium"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        mc:Ignorable="d">
+    <Window.Resources>
+        <local:BitmapSourceConvert x:Key="BitmapSourceConvert" />
+    </Window.Resources>
+    <Window.DataContext>
+        <local:MainWindowViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Menu>
+                <MenuItem Command="{Binding LoadCommand}"
+                          CommandParameter="template" Header="Load Template" />
+                <MenuItem Command="{Binding TrainCommand}" Header="Train Template" />
+                <materialDesign:PopupBox Padding="3,0" PlacementMode="BottomAndAlignRightEdges"
+                                         StaysOpen="True">
+                    <pt:PropertyGrid SelectedObject="{Binding TrainParame}" TabVisibility="VisibleIfMoreThanOne" />
+                </materialDesign:PopupBox>
+            </Menu>
+            <InkCanvas Grid.Row="1">
+                <InkCanvas.Background>
+                    <VisualBrush Stretch="Uniform">
+                        <VisualBrush.Visual>
+                            <Image Source="{Binding Template, Converter={StaticResource BitmapSourceConvert}}" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </InkCanvas.Background>
+            </InkCanvas>
+        </Grid>
+        <GridSplitter Grid.Column="1" Width="3"
+                      HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                      Background="Gray" />
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Menu>
+                <MenuItem Command="{Binding LoadCommand}"
+                          CommandParameter="source" Header="Load Destination" />
+                <MenuItem Command="{Binding SearchCommand}" Header="NCC Match Search" />
+                <materialDesign:PopupBox Padding="3,0" PlacementMode="BottomAndAlignRightEdges"
+                                         StaysOpen="True">
+                    <pt:PropertyGrid SelectedObject="{Binding SearchParame}" TabVisibility="VisibleIfMoreThanOne" />
+                </materialDesign:PopupBox>
+            </Menu>
+            <InkCanvas Grid.Row="1">
+                <InkCanvas.Background>
+                    <VisualBrush Stretch="Uniform">
+                        <VisualBrush.Visual>
+                            <Image Source="{Binding Destination, Converter={StaticResource BitmapSourceConvert}}" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </InkCanvas.Background>
+            </InkCanvas>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace EdgeBasedTemplateMatching.Views
+namespace EdgeBasedTemplateMatching
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
