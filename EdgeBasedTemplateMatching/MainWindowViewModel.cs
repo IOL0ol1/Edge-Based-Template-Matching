@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 using Microsoft.Win32;
@@ -13,6 +12,8 @@ using OpenCvSharp;
 
 using Prism.Commands;
 using Prism.Mvvm;
+
+using PropertyTools.DataAnnotations;
 
 namespace EdgeBasedTemplateMatching
 {
@@ -66,7 +67,7 @@ namespace EdgeBasedTemplateMatching
         private void LoadExecute(string i)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.InitialDirectory = Path.Combine( Path.GetDirectoryName(GetType().Assembly.Location),"Images");
+            dialog.InitialDirectory = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "Images");
             dialog.Filter = "JPG|*.jpg|PNG|*.png|BMP|*.bmp|All|*.*";
             if (dialog.ShowDialog().Value == true)
             {
@@ -281,95 +282,69 @@ namespace EdgeBasedTemplateMatching
     /// <summary>
     /// Train parame
     /// </summary>
-    public class TrainParame : BindableBase
+    public class TrainParame  
     {
 
-        private double threshold1 = 10;
         /// <summary>
         /// Canny threshold1
         /// </summary>
-        public double Threshold1
-        {
-            get { return threshold1; }
-            set { SetProperty(ref threshold1, value); }
-        }
+        [PropertyTools.DataAnnotations.Category("Canny")]
+        [PropertyTools.DataAnnotations.DisplayName("threshold1")]
+        public double Threshold1 { get; set; } = 10;
 
-        public double threshold2 = 100;
         /// <summary>
         /// Canny threshold2
         /// </summary>
-        public double Threshold2
-        {
-            get { return threshold2; }
-            set { SetProperty(ref threshold2, value); }
-        }
-
-        private int apertureSize = 3;
+        [PropertyTools.DataAnnotations.Category("Canny")]
+        [PropertyTools.DataAnnotations.DisplayName("threshold2")]
+        public double Threshold2 { get; set; } = 100;
+         
         /// <summary>
         /// Canny apertureSize
         /// </summary>
-        public int ApertureSize
-        {
-            get { return apertureSize; }
-            set { SetProperty(ref apertureSize, value); }
-        }
+        [PropertyTools.DataAnnotations.Category("Canny")]
+        [PropertyTools.DataAnnotations.DisplayName("apertureSize")]
+        public int ApertureSize { get; set; } = 3;
 
         /// <summary>
         /// Canny L2gradient
         /// </summary>
-        private bool l2gradient = false;
-        public bool L2gradient
-        {
-            get { return l2gradient; }
-            set { SetProperty(ref l2gradient, value); }
-        }
+        [PropertyTools.DataAnnotations.Category("Canny")]
+        [PropertyTools.DataAnnotations.DisplayName("L2gradient")]
+        public bool L2gradient { get; set; } = false;
 
         /// <summary>
         /// FindContours mode
         /// </summary>
-        private RetrievalModes mode = RetrievalModes.External;
-        public RetrievalModes Mode
-        {
-            get { return mode; }
-            set { SetProperty(ref mode, value); }
-        }
+        [PropertyTools.DataAnnotations.Category("FindContours")]
+        [PropertyTools.DataAnnotations.DisplayName("mode")]
+        public RetrievalModes Mode { get; set; } = RetrievalModes.External;
 
         /// <summary>
         /// FindContours method
         /// </summary>
-        private ContourApproximationModes method = ContourApproximationModes.ApproxNone;
-        public ContourApproximationModes Method
-        {
-            get { return method; }
-            set { SetProperty(ref method, value); }
-        }
+        [PropertyTools.DataAnnotations.Category("FindContours")]
+        [PropertyTools.DataAnnotations.DisplayName("method")]
+        public ContourApproximationModes Method { get; set; } = ContourApproximationModes.ApproxNone;
 
     }
 
     /// <summary>
     /// Search parame
     /// </summary>
-    public class SearchParame : BindableBase
+    public class SearchParame 
     {
-        private double minScore = 0.9;
         /// <summary>
         /// min score to skip search
         /// </summary>
-        public double MinScore
-        {
-            get { return minScore; }
-            set { SetProperty(ref minScore, value); }
-        }
+        [PropertyTools.DataAnnotations.DisplayName("Minscore to skip search")]
+        public double MinScore { get; set; } = 0.9;
 
-        private double greediness = 0.9;
         /// <summary>
         /// greediness for search
         /// </summary>
-        public double Greediness
-        {
-            get { return greediness; }
-            set { SetProperty(ref greediness, value); }
-        }
+        [PropertyTools.DataAnnotations.DisplayName("Greediness for search")]
+        public double Greediness { get; set; } = 0.9;
 
     }
 
