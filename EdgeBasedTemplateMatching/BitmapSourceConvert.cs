@@ -1,10 +1,9 @@
-﻿using System;
+﻿using OpenCvSharp;
+using OpenCvSharp.WpfExtensions;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
-
-using OpenCvSharp;
-using OpenCvSharp.WpfExtensions;
 
 namespace EdgeBasedTemplateMatching
 {
